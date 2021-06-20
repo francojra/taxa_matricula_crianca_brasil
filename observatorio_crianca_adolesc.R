@@ -36,9 +36,9 @@ df <- df.sim %>%
   summarise(media = mean(taxa_bruta_mat_pre_escola)) # Média por ano
 df
 
-# Gráfico -----------------------------------------------------------------
-
 df.sim$ano <- as.factor(df.sim$ano) # Transformar ano em variável fator
+
+# Gráfico -----------------------------------------------------------------
 
 ggplot(df.sim, aes(x=ano, y=taxa_bruta_mat_pre_escola, fill=ano)) +
   geom_boxplot() +
