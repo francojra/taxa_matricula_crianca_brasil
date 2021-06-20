@@ -13,7 +13,7 @@ library(ggthemes)
 
 # Carregar dados ----------------------------------------------------------
 
-# Fonte: Base dos Dados e Google Cloud
+# Fontes: Observat√≥rio da Crian√ßa e do Adolescente, Base dos Dados e Google Cloud
 
 bq_auth(path = "~/Documents/pRaticando-Softawer-R/base_dos_dados.json")
 
@@ -28,17 +28,17 @@ FROM `basedosdados.br_abrinq_oca.primeira_infancia_municipios` LIMIT 100"
 
 df.sim = dbGetQuery(con, query)
 
-# PreparaÁ„o dos dados ----------------------------------------------------
+# Prepara√ß√£o dos dados ----------------------------------------------------
 
 df <- df.sim %>%
   select(ano, taxa_bruta_mat_pre_escola) %>%
   group_by(ano) %>%
-  summarise(media = mean(taxa_bruta_mat_pre_escola)) # MÈdia por ano
+  summarise(media = mean(taxa_bruta_mat_pre_escola)) # M√©dia por ano
 df
 
-# Gr·fico -----------------------------------------------------------------
+# Gr√°fico -----------------------------------------------------------------
 
-df.sim$ano <- as.factor(df.sim$ano) # Transformar ano em vari·vel fator
+df.sim$ano <- as.factor(df.sim$ano) # Transformar ano em vari√°vel fator
 
 ggplot(df.sim, aes(x=ano, y=taxa_bruta_mat_pre_escola, fill=ano)) +
   geom_boxplot() +
@@ -47,14 +47,14 @@ ggplot(df.sim, aes(x=ano, y=taxa_bruta_mat_pre_escola, fill=ano)) +
                aes(group = ano, shape = ano),
                position = position_dodge(width = 0.72)) +
   scale_fill_stata() +
-  labs(y = "Taxa bruta de matrÌculas na prÈ-escola",
+  labs(y = "Taxa bruta de matr√≠culas na pr√©-escola",
        x = "Ano") +
   theme_stata() +
   theme(legend.position = "none",
         axis.title = element_text(size = 16),
         axis.text = element_text(size = 12)) 
 
-# An·lises ----------------------------------------------------------------
+# An√°lises ----------------------------------------------------------------
 
 modelo = aov(taxa_bruta_mat_pre_escola ~ ano,
             data = df.sim)
